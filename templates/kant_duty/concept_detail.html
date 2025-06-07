@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ concept.title }} - Философия Канта{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'kant_duty:concept_list' %}">Концепции</a></li>
+            <li class="breadcrumb-item active">{{ concept.title }}</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">{{ concept.title }}</h1>
+    <div class="mb-5">
+        {{ concept.description|linebreaks }}
+    </div>
+
+    {% if historical_contexts %}
+    <section class="mb-5">
+        <h2 class="mb-4">Исторический контекст</h2>
+        {% for context in historical_contexts %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ context.period }}</h5>
+                <p class="card-text">{{ context.description|linebreaks }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if quotes %}
+    <section class="mb-5">
+        <h2 class="mb-4">Цитаты</h2>
+        {% for quote in quotes %}
+        <div class="quote mb-4">
+            <p>{{ quote.text }}</p>
+            <footer class="text-muted">
+                — {{ quote.author }}, <cite>{{ quote.source }}</cite>
+            </footer>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if sources %}
+    <section class="mb-5">
+        <h2 class="mb-4">Источники</h2>
+        {% for source in sources %}
+        <div class="source">
+            <h5>{{ source.title }}</h5>
+            <p class="mb-1"><strong>Автор:</strong> {{ source.author }}</p>
+            <p class="mb-1"><strong>Год:</strong> {{ source.year }}</p>
+            <p class="mb-1">{{ source.description }}</p>
+            {% if source.url %}
+            <a href="{{ source.url }}" target="_blank" class="btn btn-outline-primary btn-sm">Перейти к источнику</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+</div>
+{% endblock %} 

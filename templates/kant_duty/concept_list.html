@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Концепции - Философия Канта{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Концепция долга в философии Канта</h1>
+    
+    <div class="row">
+        {% for concept in concepts %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ concept.title }}</h5>
+                    <p class="card-text">{{ concept.description|truncatewords:30 }}</p>
+                    <a href="{% url 'kant_duty:concept_detail' concept.pk %}" class="btn btn-primary">Подробнее</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-muted">Концепции пока не добавлены.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
